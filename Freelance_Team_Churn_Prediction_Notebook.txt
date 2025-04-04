@@ -1,0 +1,30 @@
+
+# Freelance Team Churn Prediction
+
+This notebook demonstrates a churn prediction model for freelance teams using synthetic data.
+
+## Step 1: Generate Data
+Synthetic data includes:
+- Team size
+- Average project value
+- Client rating
+- Disputes
+- Churn flag
+
+## Step 2: Preprocess
+Data scaled and split into training/testing sets.
+
+## Step 3: Train Models
+Models trained:
+- Logistic Regression
+- Random Forest
+
+## Step 4: Results
+Accuracy Scores:
+{'Logistic Regression': 0.675, 'Random Forest': 0.64}
+
+Classification Reports:
+{'Logistic Regression': '              precision    recall  f1-score   support\n\n           0       0.68      1.00      0.81       135\n           1       0.00      0.00      0.00        65\n\n    accuracy                           0.68       200\n   macro avg       0.34      0.50      0.40       200\nweighted avg       0.46      0.68      0.54       200\n', 'Random Forest': '              precision    recall  f1-score   support\n\n           0       0.66      0.95      0.78       135\n           1       0.00      0.00      0.00        65\n\n    accuracy                           0.64       200\n   macro avg       0.33      0.47      0.39       200\nweighted avg       0.45      0.64      0.53       200\n'}
+
+## Step 5: Feature Importance
+See separate PNG plot from XGBoost (optional).
