@@ -1,0 +1,60 @@
+# Cell 1: Imports
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from xgboost import XGBClassifier
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# For reproducibility
+np.random.seed(42)
+# Cell 2: Generate Synthetic Freelance Team Data
+n_samples = 1000
+
+df = pd.DataFrame({
+    'team_size': np.random.randint(1, 15, size=n_samples),
+    'avg_monthly_projects': np.random.poisson(3, size=n_samples),
+    'avg_project_value': np.random.normal(500, 200, size=n_samples).clip(100, 2000),
+    'client_rating': np.random.uniform(2.5, 5.0, size=n_samples),
+    'deadline_meeting_rate': np.random.uniform(0.5, 1.0, size=n_samples),
+    'communication_score': np.random.uniform(0, 10, size=n_samples),
+    'dispute_count': np.random.poisson(1, size=n_samples),
+    'contract_extension_rate': np.random.uniform(0.0, 1.0, size=n_samples),
+    'is_churned': np.random.choice([0, 1], size=n_samples, p=[0.7, 0.3])
+})
+
+# Preview data
+df.head()
+# Cell 5: Model Training and Evaluation
+models = {
+    "Logistic Regression": LogisticRegression(),
+    "Random Forest": RandomForestClassifier(n_estimators=100),
+    "XGBoost": XGBClassifier(use_label_encoder=False, eval_metric='logloss')
+}
+
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    
+    print(f"\n=== {name} ===")
+    print("Accuracy:", accuracy_score(y_test, y_pred))
+    print("Classification Report:\n", classification_report(y_test, y_pred))
+    print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+# Cell 6: Feature Importance (XGBoost)
+xgb_model = models["XGBoost"]
+importances = xgb_model.feature_importances_
+
+feature_df = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': importances
+}).sort_values(by='Importance', ascending=False)
+
+plt.figure(figsize=(10,6))
+sns.barplot(x='Importance', y='Feature', data=feature_df)
+plt.title("XGBoost Feature Importance")
+plt.tight_layout()
+plt.show()
