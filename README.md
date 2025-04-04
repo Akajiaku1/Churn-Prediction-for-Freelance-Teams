@@ -42,4 +42,4 @@ streamlit run streamlit_freelance_churn_app.py
 
 ---
 
-Created by **Agbozu Ebingiye Nelvin**
+Created by ****
